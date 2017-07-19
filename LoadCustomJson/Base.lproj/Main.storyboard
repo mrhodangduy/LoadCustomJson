@@ -55,7 +55,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="id" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aiY-j6-We0">
-                                            <rect key="frame" x="10" y="1" width="80" height="24"/>
+                                            <rect key="frame" x="10" y="11" width="80" height="24"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -70,7 +70,7 @@
                                     <constraints>
                                         <constraint firstItem="aiY-j6-We0" firstAttribute="width" secondItem="FqY-dx-l7M" secondAttribute="width" id="19h-Nu-brW"/>
                                         <constraint firstItem="Ljo-aa-stJ" firstAttribute="top" secondItem="eNx-Fq-ijO" secondAttribute="bottom" constant="20" id="4UU-pY-GJN"/>
-                                        <constraint firstItem="FqY-dx-l7M" firstAttribute="top" secondItem="aiY-j6-We0" secondAttribute="bottom" constant="10" id="Jcj-tP-9a1"/>
+                                        <constraint firstItem="FqY-dx-l7M" firstAttribute="top" secondItem="aiY-j6-We0" secondAttribute="bottom" id="Jcj-tP-9a1"/>
                                         <constraint firstItem="FqY-dx-l7M" firstAttribute="leading" secondItem="CCv-QT-l7y" secondAttribute="leading" constant="10" id="KUq-St-2ym"/>
                                         <constraint firstItem="1sL-3X-q2G" firstAttribute="top" secondItem="Cg6-sg-gEj" secondAttribute="bottom" constant="10" id="Nbq-Pb-cfK"/>
                                         <constraint firstItem="1sL-3X-q2G" firstAttribute="width" secondItem="Cg6-sg-gEj" secondAttribute="width" id="P3I-Pt-Ljk"/>
@@ -102,6 +102,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="SiK-gN-Ld4">
+                        <barButtonItem key="leftBarButtonItem" title="Delete All" id="t2Y-k1-gxh">
+                            <connections>
+                                <action selector="btnDeleteAllData:" destination="1hR-Ia-xAh" id="agu-lk-MIs"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="3cU-to-5zm">
                             <connections>
                                 <action selector="loadJson:" destination="1hR-Ia-xAh" id="MwL-G4-TU6"/>

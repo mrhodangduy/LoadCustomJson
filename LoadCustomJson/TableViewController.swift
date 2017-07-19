@@ -12,29 +12,33 @@ import CoreData
 class TableViewController: UITableViewController {
     
     var arrayCustomers = Array<NSManagedObject>()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loadData()
-
-     }
-
+        tableView.reloadData()
+        
+    }
+    
     @IBAction func loadJson(_ sender: Any) {
         
-        deleteAllData()
         
         var textfiled:String!
         
         let alert = UIAlertController(title: "Link JSON", message: nil, preferredStyle: .alert)
+        
         alert.addTextField { (tf) in
             
-             textfiled = alert.textFields?[0].text
+            tf.placeholder = "input your JSON link"
         }
         
         let btnOK = UIAlertAction(title: "GET", style: .default) { (action) in
-            
+
+            textfiled = alert.textFields?[0].text
             self.saveJsonToCoreData(jsonLink:textfiled)
+            print(self.arrayCustomers.count)
+            self.tableView.reloadData()
         }
         
         let btnCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -44,9 +48,14 @@ class TableViewController: UITableViewController {
         alert.addAction(btnCancel)
         
         present(alert, animated: true, completion: nil)
-        tableView.reloadData()
     }
     
+    @IBAction func btnDeleteAllData(_ sender: Any) {
+        
+        self.deleteAllData()
+        tableView.reloadData()
+        
+    }
     func deleteAllData(){
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let rq = NSFetchRequest<NSFetchRequestResult>(entityName: "Customers")
@@ -54,6 +63,8 @@ class TableViewController: UITableViewController {
         do {
             try context.execute(rqBatch)
             try context.save()
+            self.arrayCustomers.removeAll()
+            self.tableView.reloadData()
         } catch
         {
             
@@ -87,7 +98,7 @@ class TableViewController: UITableViewController {
         customer.setValue(email, forKey: "email")
         customer.setValue(phone, forKey: "phone")
         customer.setValue(job, forKey: "job")
-        customer.setValue(avatarlink, forKey: "avatarlink")
+        customer.setValue(avatarlink, forKey: "avatar")
         
         do {
             try context.save()
@@ -120,35 +131,36 @@ class TableViewController: UITableViewController {
                             let name = myJson[i]["name"] as! String
                             let phone = myJson[i]["phone"] as! String
                             let job = myJson[i]["job"] as! String
-                            let avatarlink = myJson[i]["avatarlink"] as! String
+                            let avatarlink = myJson[i]["avatar"] as! String
                             let email = myJson[i]["email"] as! String
                             
                             self.saveData(id: id, name: name, email: email, phone: phone, job: job, avatarlink: avatarlink)
-
+                            
                         }
                     }
                     catch{
                         
-                    }                    
+                    }
+                    self.tableView.reloadData()
                 }
             }
         }
         task.resume()
         
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return arrayCustomers.count
     }
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
@@ -157,7 +169,7 @@ class TableViewController: UITableViewController {
         let image = customer.value(forKey: "avatar") as? String
         
         cell.lblname.text = customer.value(forKey: "name") as? String
-        cell.lblid.text = String(describing: customer.value(forKey: "id") as? Int)
+        cell.lblid.text = String(describing: (customer.value(forKey: "id") as? Int)!)
         cell.lblemail.text = customer.value(forKey: "email") as? String
         cell.lblphone.text = customer.value(forKey: "phone") as? String
         cell.lbljob.text = customer.value(forKey: "job") as? String
@@ -184,5 +196,5 @@ class TableViewController: UITableViewController {
         
         return cell
     }
-
+    
 }
